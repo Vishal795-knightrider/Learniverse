@@ -1,0 +1,138 @@
+/* Memory Game Styles */
+#memory-game {
+    display: grid;
+    gap: 10px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  /* Memory Card */
+  .memory-card {
+    background: #f0f0f0;
+    border: 2px solid #555;
+    border-radius: 12px;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease, background 0.5s, box-shadow 0.4s;
+  }
+  
+  /* Card Flipped */
+  .memory-card.flipped {
+    transform: rotateY(180deg);
+  }
+  
+  /* Card Match */
+  .memory-card.match {
+    background: linear-gradient(135deg, #a0e9ff, #b1f8b8);
+    box-shadow: 0 0 15px 5px rgba(161, 255, 188, 0.7);
+    transform: scale(1.02);
+    cursor: default;
+    animation: smallShake 0.4s ease;
+  }
+  
+  /* Card Wrong (Mismatch) */
+  .memory-card.wrong {
+    animation: smallShakeWrong 0.4s ease;
+  }
+  
+  /* Card Front & Back */
+  .memory-card .front,
+  .memory-card .back {
+    backface-visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+  
+  /* Card Faces */
+  .memory-card .front {
+    transform: rotateY(0deg);
+  }
+  .memory-card .back {
+    transform: rotateY(180deg);
+  }
+  
+  /* Animations */
+  
+  /* Small shake for matched */
+  @keyframes smallShake {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    25% { transform: translate(2px, -2px) rotate(1deg); }
+    50% { transform: translate(-2px, 2px) rotate(-1deg); }
+    75% { transform: translate(2px, 2px) rotate(1deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+  }
+  
+  /* Small shake for wrong (without rotate!) */
+  @keyframes smallShakeWrong {
+    0% { transform: translate(0px, 0px); }
+    25% { transform: translate(3px, 0px); }
+    50% { transform: translate(-3px, 0px); }
+    75% { transform: translate(2px, 0px); }
+    100% { transform: translate(0px, 0px); }
+  }
+  
+  /* Particle trailing effects */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: fall 4s linear forwards;
+  }
+  
+  /* Confetti fall */
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+  .fade-in {
+    animation: fadeIn 0.6s ease forwards;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  /* Pulse background effect on level complete */
+.pulse-bg {
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 20px #38bdf8, 0 0 40px #38bdf8, 0 0 60px #38bdf8;
+  }
+  to {
+    box-shadow: 0 0 40px #0ea5e9, 0 0 80px #0ea5e9, 0 0 120px #0ea5e9;
+  }
+}
+
+/* Add some shake effect for wrong answer (optional if you want more drama) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 80% { transform: translateX(-10px); }
+  40%, 60% { transform: translateX(10px); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}

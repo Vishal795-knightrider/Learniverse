@@ -1,23 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Learniverse - Growing Young Minds!</title>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init('dpVgK5PVSKB1uV2cW'); // Your real Public Key
-  })();
-</script>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" defer></script>
-  <script src="script.js" defer></script>
+
+  <!-- Favicon (Optional) -->
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
 
+  <!-- Initialize EmailJS -->
+  <script>
+    (function() {
+      emailjs.init('dpVgK5PVSKB1uV2cW'); // Your real Public Key
+    })();
+  </script>
 
+  <!-- Your Custom Script -->
+  <script src="script.js" defer></script>
 </head>
+
 
 <body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen font-sans transition-all duration-500">
 
@@ -26,27 +37,39 @@
 <nav class="flex items-center justify-between bg-white shadow-md px-6 py-4 sticky top-0 z-50">
   
     <!-- Left: Brand -->
-    <div class="text-3xl font-bold text-blue-600 flex items-center gap-2">
-      Learniverse <span>🌟</span>
+    <div class="text-3xl font-bold text-blue-600 flex items-center gap-4">
+      <img src="lvnewimg.jpg" alt="Logo" class="w-15 h-14"> 
+      Learniverse <span></span>
     </div>
+    
+    
   
     <!-- Center: Day/Night Toggle -->
     <div id="modeToggle" class="text-2xl cursor-pointer text-yellow-500">
       <i class="fas fa-sun"></i>
     </div>
-  
-    <!-- Right: Score + Nav Links -->
-    <div class="flex items-center space-x-8">
-  
-      <!-- Score Display -->
-      <div id="points-display" class="flex items-center font-bold text-lg gap-2">
-        <span>Points:</span>
-        <div id="points-value" data-points="000"></div>
-        <div class="digits-wrapper flex"></div>
-      </div>
+    <nav class="flex items-center space-x-8">
+      <!-- Other Nav items like Points, etc -->
+      <div id="points-display" class="font-bold text-lg">Points: <span id="points-value">000</span></div>
+      
+      <!-- Reset Button -->
+      <button id="reset-full-btn"  
+      class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95">
+       Full Reset
+    </button>
+    
+
+    
+    
+      
+      
+      
+    </nav>
+    
+    
   
       <!-- Navigation Links -->
-      <a href="index.html" class="hover:text-blue-500 font-semibold">Home</a>
+      <a href="index.html" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95">Home</a>
   
       <!-- Features Dropdown -->
       <!-- Features Dropdown -->
@@ -84,8 +107,8 @@
 </div>
 
 
-      <button id="login-btn" class="hover:text-blue-500 font-semibold">Login</button>
-      <button id="logout-btn" class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+      <button id="login-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95"">Login</button>
+      <button id="logout-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95">
         Logout
       </button>
       <!-- Hello Name -->
@@ -113,11 +136,14 @@
   <!-- Features Section -->
   <section id="features" class="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     <!-- Feature Cards -->
-    <div class="feature-card">
-      <i class="fas fa-brain text-5xl text-purple-500 mb-4"></i>
-      <h2 class="feature-title">Memory Game</h2>
-      <p>Boost your memory with exciting challenges!</p>
-    </div>
+   <!-- Memory Game Card -->
+<div class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300" onclick="openMemoryGame()">
+  <i class="fas fa-brain text-5xl text-purple-500 mb-4 animate-pulse"></i>
+  <h2 class="feature-title text-2xl font-bold text-blue-700">Memory Game</h2>
+  <p class="text-gray-600 mt-2">Boost your memory with exciting challenges!</p>
+</div>
+
+    
 
     <div class="feature-card">
       <i class="fas fa-smile-beam text-5xl text-yellow-400 mb-4"></i>
@@ -282,7 +308,11 @@
       
       <!-- ❌ Close Button -->
       <button id="close-popup" class="absolute top-2 right-3 text-2xl text-gray-500 hover:text-gray-700">✖️</button>
-  
+  <!-- Messages (Global, Forgot, Success) -->
+<div id="global-message" class="hidden text-center mt-4"></div>
+<div id="forgot-message" class="hidden text-center mt-2 text-blue-500"></div>
+<div id="login-success-message" class="hidden text-green-600 font-bold text-center mt-4"></div>
+
       <!-- LOGIN FORM -->
       <form id="login-form" class="auth-form flex flex-col gap-4">
         <h2 class="text-2xl font-bold mb-4">Login</h2>
@@ -326,5 +356,30 @@
     </div>
   </div>
   
+  
+  <script src="js/app.js"></script>
+  
+ 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const points = localStorage.getItem('memoryGamePoints') || 0;
+      const scoreDisplay = document.getElementById('score-display');
+      if (scoreDisplay) {
+        scoreDisplay.textContent = points;
+      }
+    });
+  </script>
+  <script>
+    // Update Points Display from LocalStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      const pointsValue = document.getElementById('points-value'); // Make sure this ID matches your HTML
+      const savedPoints = localStorage.getItem('memoryGamePoints');
+      if (savedPoints !== null && pointsValue) {
+        pointsValue.textContent = savedPoints;
+      }
+    });
+  </script>
+  
+    
 </body>
 </html>

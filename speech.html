@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speech Master</title>
+  <link rel="stylesheet" href="speech.css" />
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">🎤 Speech Master</h1>
+    <div class="game-card">
+      <div class="level-score">
+        <div id="level">Level: 1 / 20</div>
+        <div id="score">Score: 0</div>
+      </div>
+      <div id="frequencyGraph"></div>
+      <div class="word-card">
+        <span id="word">Speak this word</span>
+      </div>
+      <button id="speakBtn">🎙 Speak</button>
+      <div id="feedback"></div>
+      <div class="actions">
+        <button id="nextLevelBtn" style="display: none;">Next Level</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+    </div>
+  </div>
+  <canvas id="confettiCanvas"></canvas>
+  <script src="speech.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Social Quiz - Learniverse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center p-4">
+
+  <!-- Level Selection -->
+  <div class="bg-white shadow-xl rounded-3xl p-8 max-w-xl w-full text-center" id="level-section">
+    <h1 class="text-3xl font-bold text-blue-700 mb-6">🌍 Select Quiz Level</h1>
+    <div class="grid grid-cols-2 gap-4" id="level-buttons"></div>
+  </div>
+
+  <!-- Quiz Section -->
+  <div class="bg-white shadow-xl rounded-3xl p-8 max-w-xl w-full hidden" id="quiz-section">
+    <h2 class="text-2xl font-bold text-blue-700 mb-4" id="level-heading">Level Quiz</h2>
+    <p id="question" class="text-lg font-semibold text-gray-800 mb-6">Loading question...</p>
+    <div id="options" class="grid gap-4"></div>
+    <p id="score" class="text-center text-purple-600 font-semibold mt-6 hidden">Your Score: 0</p>
+    <button onclick="goBack()" class="mt-4 text-sm text-blue-600 underline">Back to Levels</button>
+  </div>
+
+  <script>
+    const levelButtonsContainer = document.getElementById('level-buttons');
+    const unlockedLevel = parseInt(localStorage.getItem('unlockedLevel')) || 1;
+
+    for (let i = 1; i <= 10; i++) {
+      const isLocked = i > unlockedLevel;
+      const button = document.createElement('button');
+      button.textContent = isLocked ? `🔒 Level ${i}` : `Level ${i}`;
+      button.disabled = isLocked;
+      button.className = `${isLocked ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'} py-2 px-4 rounded-full font-semibold transition w-full`;
+      if (!isLocked) {
+        button.onclick = () => startLevel(i);
+      }
+      levelButtonsContainer.appendChild(button);
+    }
+
+    const quizData = {
+      1: [
+        { question: "What is the capital city of France?", options: ["Paris", "London", "Rome", "Berlin"], answer: "Paris" },
+        { question: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Jupiter", "Saturn"], answer: "Mars" },
+        { question: "What is the largest mammal in the world?", options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"], answer: "Blue Whale" },
+        { question: "How many continents are there on Earth?", options: ["5", "6", "7", "8"], answer: "7" },
+        { question: "Who wrote 'The Jungle Book'?", options: ["Rudyard Kipling", "J.K. Rowling", "Roald Dahl", "Mark Twain"], answer: "Rudyard Kipling" }
+      ],
+      2: [
+        { question: "What is the hardest natural substance on Earth?", options: ["Gold", "Iron", "Diamond", "Silver"], answer: "Diamond" },
+        { question: "What gas do plants absorb from the air?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], answer: "Carbon Dioxide" },
+        { question: "Which is the longest river in the world?", options: ["Amazon", "Nile", "Yangtze", "Mississippi"], answer: "Nile" },
+        { question: "Who painted the Mona Lisa?", options: ["Leonardo da Vinci", "Pablo Picasso", "Van Gogh", "Claude Monet"], answer: "Leonardo da Vinci" },
+        { question: "What is the chemical symbol for water?", options: ["H2O", "O2", "CO2", "NaCl"], answer: "H2O" }
+      ]
+      // Add levels 3–10 here
+    };
+
+    let currentLevel = 1;
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const scoreEl = document.getElementById("score");
+    const quizSection = document.getElementById("quiz-section");
+    const levelSection = document.getElementById("level-section");
+    const levelHeading = document.getElementById("level-heading");
+
+    function startLevel(level) {
+      currentLevel = level;
+      currentQuestion = 0;
+      score = 0;
+      levelSection.classList.add("hidden");
+      quizSection.classList.remove("hidden");
+      levelHeading.textContent = `Level ${level} Quiz`;
+      scoreEl.classList.add("hidden");
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const qList = quizData[currentLevel];
+      if (!qList) {
+        questionEl.textContent = "Quiz data missing!";
+        return;
+      }
+      const q = qList[currentQuestion];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = "";
+
+      q.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.textContent = option;
+        btn.className = "bg-purple-200 hover:bg-purple-300 text-gray-800 py-2 px-4 rounded-full font-semibold transition";
+        btn.onclick = () => {
+          if (option === q.answer) score++;
+          currentQuestion++;
+          if (currentQuestion < qList.length) {
+            loadQuestion();
+          } else {
+            showScore();
+          }
+        };
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function showScore() {
+      optionsEl.innerHTML = "";
+      questionEl.textContent = "Quiz Completed!";
+      scoreEl.textContent = `Your Score: ${score} / ${quizData[currentLevel].length}`;
+      scoreEl.classList.remove("hidden");
+
+      const unlockedLevel = parseInt(localStorage.getItem('unlockedLevel')) || 1;
+      const isPerfect = score === quizData[currentLevel].length;
+
+      if (isPerfect && currentLevel === unlockedLevel && unlockedLevel < 10) {
+        localStorage.setItem('unlockedLevel', unlockedLevel + 1);
+      }
+    }
+
+    function goBack() {
+      quizSection.classList.add("hidden");
+      location.reload(); // to refresh unlocked buttons
+    }
+  </script>
+
+</body>
+</html>

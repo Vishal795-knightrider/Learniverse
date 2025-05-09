@@ -1,186 +1,239 @@
-$(document).ready(function () {
-  let playing = false;
-  let score = 0;
-  let bestScore = parseInt(localStorage.getItem("bestScore")) || 0;
-  let level = 1;
-  let questionsAnswered = 0;
-  let correctAnswer;
-  const emojis = ["😃", "🚀", "🎉", "🌟", "😎"];
-  const operations = ['+', '-', '×', '÷'];
-
-  $("#bestScore").text(bestScore);
-
-  function updateUI() {
-    $("#scorevalue").text(score);
-    $("#level").text(level);
-    $("#progressBar").css("width", (questionsAnswered * 10) + "%");
-  }
-
-  function generateQA() {
-    $("#nextlevel").hide();
-    $("#feedbackEmoji").text('');
-
-    let op = operations[Math.floor(Math.random() * operations.length)];
-    let x = Math.floor(Math.random() * 10 * level) + 1;
-    let y = Math.floor(Math.random() * 10 * level) + 1;
-
-    if (op === '÷') {
-      correctAnswer = x;
-      y = y === 0 ? 1 : y;
-      x = x * y;
-    } else if (op === '-') {
-      if (y > x) [x, y] = [y, x];
-      correctAnswer = x - y;
-    } else if (op === '+') {
-      correctAnswer = x + y;
-    } else {
-      correctAnswer = x * y;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learniverse Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    $("#question").text(`${x} ${op} ${y}`);
-
-    let correctPos = Math.floor(Math.random() * 4) + 1;
-    $(`#box${correctPos}`).text(correctAnswer);
-
-    let answers = [correctAnswer];
-    for (let i = 1; i <= 4; i++) {
-      if (i !== correctPos) {
-        let wrong;
-        do {
-          let a = Math.floor(Math.random() * 10 * level) + 1;
-          let b = Math.floor(Math.random() * 10 * level) + 1;
-          wrong = a + b;
-        } while (answers.includes(wrong));
-        $(`#box${i}`).text(wrong);
-        answers.push(wrong);
-      }
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 15px 25px rgba(0, 255, 255, 0.3);
     }
-  }
-
-  function showLevelCompleted() {
-    $("#congratsText").html(`🎉 Congratulations!<br>Level ${level - 1} Completed! 🎉`);
-    $("#celebration").addClass("show");
-    launchConfetti();
-    setTimeout(() => {
-      $("#celebration").removeClass("show");
-      $("#nextlevel").fadeIn(500);
-    }, 3000);
-  }
-
-  function launchConfetti() {
-    const duration = 3 * 1000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
-    function randomInRange(min, max) {
-      return Math.random() * (max - min) + min;
+    .glow-border {
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
     }
-    const interval = setInterval(function () {
-      const timeLeft = animationEnd - Date.now();
-      if (timeLeft <= 0) {
-        clearInterval(interval);
-      }
-      confetti(Object.assign({}, defaults, {
-        particleCount: 5,
-        origin: { x: randomInRange(0, 1), y: Math.random() * 0.2 }
-      }));
-    }, 250);
-  }
-
-  function updateLeaderboard(newScore) {
-    let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    leaderboard.push({ score: newScore, time: Date.now() });
-    leaderboard.sort((a, b) => b.score - a.score || a.time - b.time);
-
-    // Limit to top 1 score
-    leaderboard = leaderboard.slice(0, 1);
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-
-    renderLeaderboard();
-  }
-
-  function renderLeaderboard() {
-    let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-
-    // Filter out entries with score <= 0
-    leaderboard = leaderboard.filter(entry => entry.score > 0);
-
-    // Only render the top score if exists
-    if (leaderboard.length > 0) {
-      const topScore = leaderboard[0].score;
-      $("#leaderboardList").html(`<li>#1: ${topScore} pts</li>`);
+    .chart-container {
+      height: 400px;
+      max-height: 400px;
     }
-
-    // Display best score
-    if (bestScore > 0) {
-      $("#bestScore").text(bestScore);
+    .flatpickr-calendar {
+      background: #ffffff;
+      color: #000;
     }
-  }
+    .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+      background: #06b6d4 !important;
+      color: #fff;
+    }
+    body {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white p-4">
+  <div class="container mx-auto max-w-6xl">
+    <h1 class="text-3xl font-bold text-center text-cyan-400 mb-6">📊 Learniverse Dashboard</h1>
 
-  $('.box').click(function () {
-    if (!playing) return;
-    let selected = parseInt($(this).text());
-    if (selected === correctAnswer) {
-      score++;
-      questionsAnswered++;
-      updateUI();
-      $('#feedbackEmoji').text(emojis[Math.floor(Math.random() * emojis.length)]).css('transform', 'scale(1.5)').fadeIn(200).fadeOut(400);
-      if (questionsAnswered === 10) {
-        level++;
-        score += 10;
-        questionsAnswered = 0;
+    <!-- Calendar and Export Button -->
+    <div class="flex justify-center gap-4 mb-6">
+      <input id="datePicker" class="p-2 rounded bg-gray-100 text-black w-48 text-center" placeholder="Select date" />
+      <button onclick="exportDashboard()" class="bg-green-500 hover:bg-green-600 transition p-2 rounded font-semibold">📥 Export PDF</button>
+    </div>
 
-        // Update the best score if the current score is higher
-        if (score > bestScore) {
-          bestScore = score;
-          localStorage.setItem("bestScore", bestScore); // Save the new best score
-          $("#bestScore").text(bestScore); // Update best score on the UI
+    <div id="topCharts">
+      <!-- Top Charts -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+        <div class="card glow-border bg-gray-800 p-3 rounded-xl chart-container">
+          <h2 class="text-center text-base font-semibold mb-1">🕒 Time on Activities</h2>
+          <canvas id="activityChart"></canvas>
+        </div>
+        <div class="card glow-border bg-gray-800 p-3 rounded-xl chart-container">
+          <h2 class="text-center text-base font-semibold mb-1">🎮 Emotion Game</h2>
+          <canvas id="emotionChart"></canvas>
+        </div>
+        <div class="card glow-border bg-gray-800 p-3 rounded-xl chart-container">
+          <h2 class="text-center text-base font-semibold mb-1">😊 Mood Tracker</h2>
+          <canvas id="moodChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Marks Breakdown -->
+      <div class="card glow-border bg-gray-800 p-3 rounded-xl max-w-full mx-auto">
+        <h2 class="text-center text-base font-semibold mb-1">📚 Marks Breakdown</h2>
+        <canvas id="marksChart" style="max-height: 250px;"></canvas>
+        <p id="dailyTotal" class="text-center mt-2 text-sm font-medium"></p>
+        <p id="weeklyTotal" class="text-center mt-1 text-sm font-bold text-yellow-400"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const datePicker = document.getElementById('datePicker');
+    let charts = {};
+    let dataMap = generateWeeklyData();
+
+    function generateWeeklyData() {
+      return {
+        activity: [random(30, 60), random(10, 40), random(10, 30), random(5, 25)],
+        emotion: labels.map(() => random(6, 14)),
+        mood: labels.map(() => random(1, 5)),
+        marks: {
+          memory: labels.map(() => random(10, 50)),
+          behavior: labels.map(() => random(15, 45)),
+          social: labels.map(() => random(20, 50)),
+          math: labels.map(() => random(25, 55))
         }
-
-        updateLeaderboard(score);
-        showLevelCompleted();
-      } else {
-        generateQA();
-      }
-    } else {
-      $('#question').addClass('shake');
-      setTimeout(() => $('#question').removeClass('shake'), 500);
+      };
     }
-  });
 
-  $('#startreset').click(function () {
-    if (playing) {
-      // Before reloading or resetting, check if the current score is a new best score
-      if (score > bestScore) {
-        bestScore = score; // Update best score
-        localStorage.setItem("bestScore", bestScore); // Store the new best score
-        $("#bestScore").text(bestScore); // Update best score on the UI
-      }
-      
-      location.reload(); // Reload the game
-    } else {
-      playing = true;
-      score = 0;
-      level = 1;
-      questionsAnswered = 0;
-      $("#startreset").text("Reset Game");
-      $("#nextlevel").hide();
-      updateUI();
-      generateQA();
+    function random(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-  });
 
-  $('#nextlevel').click(function () {
-    $('#nextlevel').hide();
-    $('#celebration').removeClass('show');
-    generateQA();
-  });
+    function initCharts() {
+      const { activity, emotion, mood, marks } = dataMap;
 
-  // Reset best score functionality
-  $('#resetBestScore').click(function () {
-    bestScore = 0;
-    localStorage.setItem("bestScore", bestScore);
-    $("#bestScore").text(bestScore); // Update best score in the UI
-  });
+      charts.activity = new Chart(document.getElementById('activityChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Math', 'Emotion', 'Reading', 'Play'],
+          datasets: [{ data: activity, backgroundColor: ['#10B981', '#3B82F6', '#F59E0B', '#EF4444'], hoverOffset: 10 }]
+        },
+        options: { responsive: true }
+      });
 
-  renderLeaderboard();  // Call to render leaderboard initially
+      charts.emotion = new Chart(document.getElementById('emotionChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [{
+      label: 'Emotion Score',
+      data: emotion,
+      borderColor: '#F59E0B',
+      backgroundColor: '#FDE68A',
+      fill: true,
+      tension: 0.4
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    onHover: (_, elements) => {
+      if (elements.length) {
+        const i = elements[0].index;
+        document.getElementById('dailyTotal').innerText = `Emotion Score for ${labels[i]}: ${emotion[i]}`;
+      }
+    }
+  }
 });
+
+
+      charts.mood = new Chart(document.getElementById('moodChart'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{ label: 'Mood (1-5)', data: mood, borderColor: '#3B82F6', backgroundColor: '#BFDBFE', fill: true, tension: 0.4 }]
+        },
+        options: {
+          responsive: true,
+          onHover: (_, elements) => {
+            if (elements.length) {
+              const i = elements[0].index;
+              document.getElementById('dailyTotal').innerText = `Mood for ${labels[i]}: ${mood[i]}`;
+            }
+          }
+        }
+      });
+
+      charts.marks = new Chart(document.getElementById('marksChart'), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            { label: 'Memory Game', data: marks.memory, backgroundColor: '#10B981' },
+            { label: 'Behavior Quiz', data: marks.behavior, backgroundColor: '#3B82F6' },
+            { label: 'Social Quiz', data: marks.social, backgroundColor: '#F59E0B' },
+            { label: 'Math Adventure', data: marks.math, backgroundColor: '#EF4444' }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true } },
+          onHover: (_, elements) => {
+            if (elements.length) {
+              const i = elements[0].index;
+              const total = marks.memory[i] + marks.behavior[i] + marks.social[i] + marks.math[i];
+              document.getElementById('dailyTotal').innerText = `Total Marks for ${labels[i]}: ${total}`;
+            }
+          }
+        }
+      });
+
+      const weeklyTotal = marks.memory.reduce((a, b) => a + b, 0) +
+                          marks.behavior.reduce((a, b) => a + b, 0) +
+                          marks.social.reduce((a, b) => a + b, 0) +
+                          marks.math.reduce((a, b) => a + b, 0);
+      document.getElementById('weeklyTotal').innerText = `Weekly Total Marks: ${weeklyTotal}`;
+    }
+
+    function refreshCharts() {
+      dataMap = generateWeeklyData();
+
+      charts.activity.data.datasets[0].data = dataMap.activity;
+      charts.activity.update();
+
+      charts.emotion.data.datasets[0].data = dataMap.emotion;
+      charts.emotion.update();
+
+      charts.mood.data.datasets[0].data = dataMap.mood;
+      charts.mood.update();
+
+      charts.marks.data.datasets[0].data = dataMap.marks.memory;
+      charts.marks.data.datasets[1].data = dataMap.marks.behavior;
+      charts.marks.data.datasets[2].data = dataMap.marks.social;
+      charts.marks.data.datasets[3].data = dataMap.marks.math;
+      charts.marks.update();
+
+      const weeklyTotal = dataMap.marks.memory.reduce((a, b) => a + b, 0) +
+                          dataMap.marks.behavior.reduce((a, b) => a + b, 0) +
+                          dataMap.marks.social.reduce((a, b) => a + b, 0) +
+                          dataMap.marks.math.reduce((a, b) => a + b, 0);
+      document.getElementById('weeklyTotal').innerText = `Weekly Total Marks: ${weeklyTotal}`;
+    }
+
+    flatpickr("#datePicker", {
+      defaultDate: new Date(),
+      dateFormat: "Y-m-d",
+      onChange: function () {
+        refreshCharts();
+      }
+    });
+
+    initCharts();
+
+    async function exportDashboard() {
+      const el = document.getElementById('topCharts');
+      const canvas = await html2canvas(el);
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 10, 10, 190, 130);
+      pdf.save('dashboard.pdf');
+    }
+  </script>
+</body>
+</html>

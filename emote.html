@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emotion Recognition Quiz</title>
+  <link rel="stylesheet" href="emote.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.min.js"></script>
+  <style>
+    .correct { background: #22c55e !important; }
+    .wrong {
+      background: #ef4444 !important;
+      animation: shake 0.4s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="info">
+      <div class="info-card">Level: <span id="level">1</span></div>
+      <div class="info-card">Score: <span id="score">0</span></div>
+    </div>
+
+    <div id="emojiCharacter">🧠</div>
+    <div id="emojiSpeech">Can you guess how I feel?</div>
+    <div id="emotion">🤔</div>
+
+    <div id="progressBarContainer">
+      <div id="progressBar"></div>
+    </div>
+
+    <div id="choices">
+      <button class="option"></button>
+      <button class="option"></button>
+      <button class="option"></button>
+      <button class="option"></button>
+    </div>
+
+    <div class="buttons">
+      <button id="startBtn">Start Game</button>
+      <button id="nextLevelBtn" style="display:none;">Next Level</button>
+    </div>
+
+    <div id="celebration">
+      <div id="congratsText"></div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      const emotions = [
+        { emoji: "😊", answer: "Happy" },
+        { emoji: "😢", answer: "Sad" },
+        { emoji: "😠", answer: "Angry" },
+        { emoji: "😮", answer: "Surprised" },
+        { emoji: "😨", answer: "Scared" },
+        { emoji: "😍", answer: "Loving" },
+        { emoji: "😎", answer: "Confident" },
+        { emoji: "😰", answer: "Nervous" },
+        { emoji: "😐", answer: "Bored" },
+        { emoji: "😇", answer: "Proud" },
+        { emoji: "😭", answer: "Crying" },
+        { emoji: "🤬", answer: "Frustrated" },
+        { emoji: "😵", answer: "Confused" }
+      ];
+
+      let playing = false;
+      let score = 0;
+      let level = 1;
+      let questionsAnswered = 0;
+      let currentEmotion;
+      let answered = false;
+      let usedEmotions = [];
+
+      const maxQuestionsPerLevel = 10;
+      const maxLevels = 30;
+
+      function updateStats() {
+        $("#score").text(score);
+        $("#level").text(level);
+        $("#progressBar").css("width", `${questionsAnswered * 10}%`);
+        localStorage.setItem("quizScore", score);
+      }
+
+      $("#startBtn").click(function () {
+        playing = true;
+        score = 0;
+        level = 1;
+        questionsAnswered = 0;
+        usedEmotions = [];
+        localStorage.setItem("quizScore", score);
+        $("#startBtn").hide();
+        $("#nextLevelBtn").hide();
+        updateStats();
+        generateQuestion();
+      });
+
+      $("#nextLevelBtn").click(function () {
+        $("#nextLevelBtn").hide();
+        $("#celebration").removeClass("show");
+        usedEmotions = [];
+        generateQuestion();
+      });
+
+      function generateQuestion() {
+        answered = false;
+        let emotionPool = emotions.filter(e => !usedEmotions.includes(e.emoji));
+        if (emotionPool.length === 0) usedEmotions = [], emotionPool = emotions;
+
+        const randomEmotion = emotionPool[Math.floor(Math.random() * emotionPool.length)];
+        currentEmotion = randomEmotion;
+        usedEmotions.push(randomEmotion.emoji);
+
+        $("#emotion").text(randomEmotion.emoji);
+        const answers = [randomEmotion.answer];
+
+        while (answers.length < 4) {
+          const option = emotions[Math.floor(Math.random() * emotions.length)].answer;
+          if (!answers.includes(option)) answers.push(option);
+        }
+
+        const shuffled = answers.sort(() => 0.5 - Math.random());
+
+        $(".option").each(function (i) {
+          $(this).text(shuffled[i]);
+          $(this).removeClass("correct wrong").css("background", "#10b981").prop("disabled", false);
+        });
+
+        $("#emojiSpeech").text("Can you guess how I feel?");
+        updateStats();
+      }
+
+      $(".option").click(function () {
+        if (!playing || answered) return;
+
+        const selected = $(this).text();
+        const correctAnswer = currentEmotion.answer;
+
+        if (selected === correctAnswer) {
+          $(this).addClass("correct");
+          $("#emojiSpeech").text("Correct! 😊");
+          score += 1;
+          localStorage.setItem("quizScore", score);
+          questionsAnswered++;
+          updateStats();
+          answered = true;
+
+          if (questionsAnswered >= maxQuestionsPerLevel) {
+            score += 10;
+            localStorage.setItem("quizScore", score);
+            level++;
+            questionsAnswered = 0;
+            if (level > maxLevels) {
+              $("#emojiSpeech").text("You've finished all levels! 🎓");
+              return;
+            }
+            setTimeout(showCelebration, 1000);
+          } else {
+            setTimeout(generateQuestion, 1000);
+          }
+        } else {
+          $(this).addClass("wrong");
+          $("#emojiSpeech").text("Oops! Try again. ❌");
+          setTimeout(() => {
+            $(this).removeClass("wrong").css("background", "#10b981");
+          }, 1000);
+        }
+      });
+
+      function showCelebration() {
+        $("#congratsText").html(`🎉 Woohoo!<br>Level ${level - 1} Complete!`);
+        $("#celebration").addClass("show");
+        launchConfetti();
+        setTimeout(() => {
+          $("#celebration").removeClass("show");
+          $("#nextLevelBtn").fadeIn(500);
+        }, 3000);
+      }
+
+      function launchConfetti() {
+        const duration = 3 * 1000;
+        const end = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+        const interval = setInterval(function () {
+          const timeLeft = end - Date.now();
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+          confetti(Object.assign({}, defaults, {
+            particleCount: 5,
+            origin: { x: Math.random(), y: Math.random() * 0.2 }
+          }));
+        }, 250);
+      }
+    });
+  </script>
+</body>
+</html>

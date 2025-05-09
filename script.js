@@ -66,10 +66,10 @@ function updateLevels() {
   if (points >= 300) levels[3].classList.add('unlocked');
   if (points >= 400) levels[4].classList.add('unlocked');
 
-  if (points < 100) levelStatus.textContent = "Earn 100 points to unlock Level 2!";
-  else if (points < 200) levelStatus.textContent = "Earn 100 points to unlock Level 3!";
-  else if (points < 300) levelStatus.textContent = "Earn 100 points to unlock Level 4!";
-  else if (points < 400) levelStatus.textContent = "Earn 100 points to unlock Level 5!";
+  if (points < 100) levelStatus.textContent = "Earn 100 points to unlock Level 1!";
+  else if (points < 200) levelStatus.textContent = "Earn 100 points to unlock Level 2!";
+  else if (points < 300) levelStatus.textContent = "Earn 100 points to unlock Level 3!";
+  else if (points < 400) levelStatus.textContent = "Earn 100 points to unlock Level 4!";
   else levelStatus.textContent = "🎉 Congratulations! All Levels Unlocked!";
 }
 
@@ -100,11 +100,27 @@ function earnPoints(earnedPoints) {
 }
 
 function resetPoints() {
+  // Reset points and levels
   points = 0;
   localStorage.setItem('points', points);
-  updateLevels();
+  
+  // Remove all unlocked levels
+  levels.forEach(level => level.classList.remove('unlocked'));
+  
+  // Reset level status message
+  levelStatus.textContent = "Earn 100 points to unlock Level 1!";
+
+  // Reset stars
   updateStars();
+  
+  // Reset points display with animation
   updatePointsDisplay();
+  
+  // Optionally, reset any other progress related to the user (e.g., achievements, etc.)
+  localStorage.removeItem('user-progress'); // Example key for user progress reset
+
+  // Alert user that progress has been reset
+  alert("Your progress has been reset.");
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -113,33 +129,6 @@ window.addEventListener('DOMContentLoaded', () => {
   updateLevels();
   updateStars();
   updatePointsDisplay();
-});
- // You can remove this line if you don't want default 313 points
-
-// ========== Mood Tracker ==========
-const moodTracker = document.getElementById('mood-tracker');
-const moodButtons = document.querySelectorAll('.mood-btn');
-const moodMessage = document.getElementById('mood-message');
-
-moodButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const selectedMood = button.getAttribute('data-mood');
-    localStorage.setItem('mood', selectedMood);
-
-    let message = "";
-    switch (selectedMood) {
-      case 'happy': message = "Keep smiling and shining! 🌟"; break;
-      case 'sad': message = "It's okay to feel sad. Tomorrow will be brighter. ❤️"; break;
-      case 'excited': message = "Yay! Let’s have an awesome learning adventure! 🚀"; break;
-      case 'angry': message = "Take a deep breath, you’re doing great! 😌"; break;
-      case 'calm': message = "Peaceful minds are powerful minds. ✨"; break;
-    }
-
-    moodMessage.textContent = message;
-    setTimeout(() => {
-      moodTracker.classList.add('hidden');
-    }, 2000);
-  });
 });
 
 // ========== Login/Signup/Forgot Password System ==========
@@ -154,22 +143,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const signupForm = document.getElementById('signup-form');
   const forgotForm = document.getElementById('forgot-form');
 
-  const toSignup = document.getElementById('to-signup');
-  const toForgot = document.getElementById('to-forgot');
-  const backToLogin1 = document.getElementById('back-to-login-1');
-  const backToLogin2 = document.getElementById('back-to-login-2');
-
   const messageArea = document.getElementById('global-message');
-  const forgotMessage = document.getElementById('forgot-message');
-  const loginSuccessMessage = document.getElementById('login-success-message');
 
   function clearMessages() {
-    loginSuccessMessage.textContent = '';
-    loginSuccessMessage.classList.add('hidden');
     messageArea.textContent = '';
     messageArea.classList.add('hidden');
-    forgotMessage.textContent = '';
-    forgotMessage.classList.add('hidden');
   }
 
   function showForm(formName) {
@@ -181,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (formName === 'signup') signupForm.classList.remove('hidden');
     if (formName === 'forgot') forgotForm.classList.remove('hidden');
   }
+
 
   loginBtn.addEventListener('click', function () {
     clearMessages();
@@ -196,17 +175,11 @@ document.addEventListener('DOMContentLoaded', function () {
     authPopup.classList.add('hidden');
   });
 
-  toSignup.addEventListener('click', () => showForm('signup'));
-  toForgot.addEventListener('click', () => showForm('forgot'));
-  backToLogin1.addEventListener('click', () => showForm('login'));
-  backToLogin2.addEventListener('click', () => showForm('login'));
-
   signupForm.addEventListener('submit', function (e) {
     e.preventDefault();
     clearMessages();
     const user = {
       name: document.getElementById('signup-name').value,
-      age: document.getElementById('signup-age').value,
       email: document.getElementById('signup-email').value,
       password: document.getElementById('signup-password').value,
     };
@@ -227,23 +200,8 @@ document.addEventListener('DOMContentLoaded', function () {
       localStorage.setItem('currentUser', JSON.stringify(storedUser));
       authPopup.classList.add('hidden');
       updateUIAfterLogin(storedUser);
-      showLoginSuccess(storedUser.name);
     } else {
       displayMessage('❌ Invalid email or password.', 'error');
-    }
-  });
-
-  forgotForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    clearMessages();
-    const email = document.getElementById('forgot-email').value;
-    const storedUser = JSON.parse(localStorage.getItem(`user-${email}`));
-    forgotMessage.classList.remove('hidden');
-
-    if (storedUser) {
-      forgotMessage.textContent = `🔒 Your password is: ${storedUser.password}`;
-    } else {
-      forgotMessage.textContent = '❌ No account found with that email.';
     }
   });
 
@@ -259,69 +217,62 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateUIAfterLogin(user) {
     loginBtn.classList.add('hidden');
     logoutBtn.classList.remove('hidden');
-    helloName.textContent = `👋 Hello, ${user.name}`;
     helloName.classList.remove('hidden');
-  }
+    helloName.textContent = `Hello, ${user.name}!`;
 
-  function showLoginSuccess(name) {
-    loginSuccessMessage.textContent = `✅ Successfully logged in as ${name}`;
-    loginSuccessMessage.classList.remove('hidden');
+    // Switch to home page view
+    document.getElementById('login-page').classList.add('hidden');
+    document.getElementById('home-page').classList.remove('hidden');
   }
 
   function displayMessage(message, type) {
-    messageArea.textContent = message;
-    messageArea.className = '';
-    if (type === 'success') messageArea.classList.add('text-green-600', 'font-bold', 'p-2');
-    if (type === 'error') messageArea.classList.add('text-red-600', 'font-bold', 'p-2');
-    if (type === 'info') messageArea.classList.add('text-blue-600', 'font-bold', 'p-2');
     messageArea.classList.remove('hidden');
+    messageArea.classList.add(type);
+    messageArea.textContent = message;
   }
 
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (currentUser) {
+  // On page load, check for an existing logged-in user
+  if (localStorage.getItem('currentUser')) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     updateUIAfterLogin(currentUser);
   }
 });
-function openMemoryGame() {
-  window.location.href = 'memory-game.html';
-}
+// script.js
 
-// Listen to storage changes from other tabs/pages
-window.addEventListener('storage', function (e) {
-  if (e.key === 'points') {
-    // If points updated, re-read them and update display
-    points = parseInt(e.newValue) || 0;
-    updateLevels();
-    updateStars();
-    updatePointsDisplay();
-  }
-});
-// Full Reset: Reset Level, Mini Score, and Main Points instantly
-function fullResetGame() {
-  localStorage.setItem('points', 0); 
-  localStorage.setItem('memoryGamePoints', 0); 
-  localStorage.setItem('memoryGameLevel', 1); 
+document.addEventListener("DOMContentLoaded", function () {
+  const resetBtn = document.getElementById("reset-full-btn");
+  const pointsValue = document.getElementById("points-value");
+  const levelStatus = document.getElementById("level-status");
 
-  points = 0;
-  level = 1;
-  matchedPairs = 0;
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      // Confirm reset
+      if (confirm("Are you sure you want to reset all progress?")) {
+        // Clear localStorage or any saved values
+        localStorage.clear();
 
-  updateLevels();
-  updateStars();
-  updatePointsDisplay(); // Correct way to update Points UI with animation!
+        // Reset points display
+        if (pointsValue) pointsValue.textContent = "000";
 
-  document.getElementById('current-level').textContent = "1";   
-  document.getElementById('current-score').textContent = "0";   
+        // Reset levels or anything else
+        const levels = document.querySelectorAll(".level");
+        levels.forEach((level, index) => {
+          if (index === 0) {
+            level.classList.add("unlocked");
+          } else {
+            level.classList.remove("unlocked");
+          }
+        });
 
-  gameBoard.innerHTML = ""; 
-  startGame();
-}
+        // Reset level status
+        if (levelStatus) {
+          levelStatus.textContent = "Earn 100 points to unlock next Level!";
+        }
 
-
-// When the page is loaded, connect the button
-document.addEventListener('DOMContentLoaded', function () {
-  const resetFullBtn = document.getElementById('reset-full-btn');
-  if (resetFullBtn) {
-    resetFullBtn.addEventListener('click', fullResetGame);
+        // Optionally reset user name or session
+        document.getElementById("hello-name").textContent = "";
+        alert("Progress has been reset!");
+      }
+    });
   }
 });

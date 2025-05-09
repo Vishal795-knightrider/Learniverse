@@ -15,15 +15,11 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
 
-  <!-- Initialize EmailJS -->
-  <script>
-    (function() {
-      emailjs.init('dpVgK5PVSKB1uV2cW'); // Your real Public Key
-    })();
-  </script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+ 
+  
 
   <!-- Your Custom Script -->
   <script src="script.js" defer></script>
@@ -94,7 +90,7 @@
       </li>
       <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2 transition-all duration-300">
         <span class="text-2xl min-w-[30px] text-center">🏆</span>
-        <a href="points.html" class="hover:text-blue-600 transition-colors duration-300">Points & Leaderboard</a>
+        <a href="report.html" class="hover:text-blue-600 transition-colors duration-300">Points & Leaderboard</a>
       </li>
       <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2 transition-all duration-300">
         <span class="text-2xl min-w-[30px] text-center">👤</span>
@@ -137,19 +133,21 @@
   <section id="features" class="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     <!-- Feature Cards -->
    <!-- Memory Game Card -->
-<div class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300" onclick="openMemoryGame()">
-  <i class="fas fa-brain text-5xl text-purple-500 mb-4 animate-pulse"></i>
-  <h2 class="feature-title text-2xl font-bold text-blue-700">Memory Game</h2>
-  <p class="text-gray-600 mt-2">Boost your memory with exciting challenges!</p>
-</div>
+<a href="memory-game.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
+  <div>
+    <i class="fas fa-brain text-5xl text-purple-500 mb-4 animate-pulse"></i>
+    <h2 class="feature-title text-2xl font-bold text-blue-700">Memory Game</h2>
+    <p class="text-gray-600 mt-2">Boost your memory with exciting challenges!</p>
+  </div>
+</a>
 
     
 
-    <div class="feature-card">
-      <i class="fas fa-smile-beam text-5xl text-yellow-400 mb-4"></i>
-      <h2 class="feature-title">Emotion Recognition</h2>
-      <p>Identify emotions to strengthen empathy skills.</p>
-    </div>
+<a href="emote.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
+  <i class="fas fa-smile-beam text-5xl text-yellow-400 mb-4"></i>
+  <h2 class="feature-title">Emotion Recognition</h2>
+  <p>Identify emotions to strengthen empathy skills.</p>
+</a>
 
     <div class="feature-card">
       <i class="fas fa-chalkboard-teacher text-5xl text-green-500 mb-4"></i>
@@ -157,23 +155,28 @@
       <p>Test and learn the best classroom behaviors!</p>
     </div>
 
-    <div class="feature-card">
-      <i class="fas fa-globe-asia text-5xl text-blue-500 mb-4"></i>
-      <h2 class="feature-title">Social Quiz</h2>
-      <p>Learn about caring for the community and environment.</p>
-    </div>
+   <a href="social-quiz.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
+        <i class="fas fa-globe-asia text-5xl text-blue-500 mb-4"></i>
+        <h2 class="feature-title">Social Quiz</h2>
+        <p>Learn about caring for the community and environment.</p>
+      </a>
 
-    <div class="feature-card">
+    <a href="math.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
       <i class="fas fa-calculator text-5xl text-red-400 mb-4"></i>
       <h2 class="feature-title">Math Adventure</h2>
       <p>Master addition, subtraction, multiplication, and division!</p>
-    </div>
+    </a>
+    
+    
 
-    <div class="feature-card">
-      <i class="fas fa-microphone text-5xl text-pink-400 mb-4"></i>
-      <h2 class="feature-title">Speech Master</h2>
-      <p>Speak vocabulary words and earn points!</p>
-    </div>
+    <a href="speech.html" class="block">
+  <div class="feature-card hover:shadow-lg transition duration-300">
+    <i class="fas fa-microphone text-5xl text-pink-400 mb-4"></i>
+    <h2 class="feature-title">Speech Master</h2>
+    <p>Speak vocabulary words and earn points!</p>
+  </div>
+</a>
+
   </section>
 
 
@@ -281,25 +284,84 @@
       </div>
     </div>
   </section>
-
-  <!-- Footer -->
-  <footer class="bg-white shadow-inner p-4 text-center text-gray-600">
-    © 2025 Learniverse | All Rights Reserved
-  </footer>
-<!-- Mood Tracker Popup -->
-<div id="mood-tracker" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded-xl text-center shadow-2xl">
-      <h2 class="text-xl font-bold mb-4">How are you feeling today?</h2>
-      <div class="flex justify-center gap-4 mb-4">
-        <button class="mood-btn" data-mood="happy">😊</button>
-        <button class="mood-btn" data-mood="sad">😔</button>
-        <button class="mood-btn" data-mood="excited">🤩</button>
-        <button class="mood-btn" data-mood="angry">😡</button>
-        <button class="mood-btn" data-mood="calm">😌</button>
-      </div>
-      <div id="mood-message" class="text-lg font-semibold text-green-600"></div>
+   <footer>
+        <!-- <div class="footer-container">
+            <div class="footer-column">
+                <h3>Our Work</h3>
+                <ul>
+                    <li>Water Management</li>
+                    <li>Agriculture Development</li>
+                    <li>Local Participation and Sustainability</li>
+                    <li>Transform Lives One School at a Time</li>
+                    <li>Outreach for Development</li>
+                    <li>Rural Research and Technology Innovation</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Knowledge Center</h3>
+                <ul>
+                    <li>Research Publications</li>
+                    <li>Organization Publications</li>
+                    <li>Books</li>
+                    <li>Green Building</li>
+                    <li>Stories from the Ground</li>
+                    <li>Videos</li>
+                </ul>
+            </div>
+ <--Include Font Awesome CDN in the head section of your HTML -->
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<div class="footer-column">
+    <h3>Follow Us</h3>
+    <div class="social-icons-column">
+        <a href="#" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+            <span>Facebook</span>
+        </a>
+        <a href="#" target="_blank">
+            <i class="fab fa-twitter"></i>
+            <span>Twitter</span>
+        </a>
+        <a href="#" target="_blank">
+            <i class="fab fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+        <a href="#" target="_blank">
+            <i class="fab fa-youtube"></i>
+            <span>YouTube</span>
+        </a>
     </div>
+</div>
+
+
+        </div>
+    </footer> --> 
+
+
+<!-- Mood Tracker Popup -->
+<!-- Mood Tracker Popup -->
+<!-- Mood Popup -->
+ 
+<!-- <div id="mood-popup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white p-8 rounded-xl text-center shadow-2xl max-w-xl w-full mx-4">
+    <h2 class="text-2xl font-bold mb-6">How are you feeling today?</h2>
+
+    <div class="flex justify-center flex-wrap gap-6 mb-6">
+      <button class="mood-btn text-5xl" data-mood="happy">😊</button>
+      <button class="mood-btn text-5xl" data-mood="sad">😔</button>
+      <button class="mood-btn text-5xl" data-mood="excited">🤩</button>
+      <button class="mood-btn text-5xl" data-mood="angry">😡</button>
+      <button class="mood-btn text-5xl" data-mood="calm">😌</button>
+    </div>
+
+     Motivational message section 
+    <p id="mood-message" class="text-blue-800 font-semibold text-base mb-4 hidden"></p>
+
+    <p class="text-gray-600 text-sm">Your mood helps us guide your learning adventure!</p>
   </div>
+</div> -->
+
+
+
   <!-- Login/Signup Popup -->
 <!-- Login/Signup Popup -->
 <!-- Login/Signup Popup -->
@@ -379,7 +441,18 @@
       }
     });
   </script>
-  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const storedScore = localStorage.getItem("quizScore") || 0;
+      document.getElementById("points-value").textContent = storedScore.toString().padStart(3, '0');
+    });
+  </script>
+ <a href="chat.html">
+  <div id="chatbot-btn" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg cursor-pointer hover:bg-blue-700 transition-all duration-300 flex items-center justify-center">
+    <!-- ChatGPT Emoji -->
+    <span style="font-size: 30px;">🤖</span>
+  </div>
+</a>
     
 </body>
 </html>

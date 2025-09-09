@@ -1,31 +1,27 @@
 {
   "brandName": "Learniverse",
-  "welcome": "Welcome",
-  "tagline": "Growing Young Minds Through Fun, Curiosity, and Care",
-  "getStarted": "Get Started",
   "pointsLabel": "Points:",
   "resetBtn": "Full Reset",
-
+  "homeLink": "Home",
+  "featuresBtn": "Features ▼",
+  "moodTracker": "Mood Tracker",
+  "leaderboard": "Points & Leaderboard",
+  "profile": "Profile Section",
+  "loginBtn": "Login",
+  "logoutBtn": "Logout",
+  "welcome": "Learniverse!",
+  "tagline": "Growing Young Minds Through Fun, Curiosity, and Care",
+  "getStarted": "Get Started",
   "memoryGame": "Memory Game",
-  "memoryDesc": "Boost your memory with exciting challenges!",
-
-  "emotionRecog": "Emotion Recognition",
-  "emotionDesc": "Identify emotions to strengthen empathy skills.",
-
+  "memoryGameDesc": "Boost your memory with exciting challenges!",
+  "emote": "Emotion Recognition",
+  "emoteDesc": "Identify emotions to strengthen empathy skills.",
   "behaviorQuiz": "Behavior Quiz",
-  "behaviorDesc": "Test and learn the best classroom behaviors!",
-
+  "behaviorQuizDesc": "Test and learn the best classroom behaviors!",
   "socialQuiz": "Social Quiz",
-  "socialDesc": "Learn about caring for the community and environment.",
-
+  "socialQuizDesc": "Learn about caring for the community and environment.",
   "mathAdventure": "Math Adventure",
-  "mathDesc": "Master addition, subtraction, multiplication, and division!",
-
+  "mathAdventureDesc": "Master addition, subtraction, multiplication, and division!",
   "speechMaster": "Speech Master",
-  "speechDesc": "Speak vocabulary words and earn points!",
-
-  "levelProgress": "🎮 Level Progress Map",
-  "levelStatus": "Earn 100 points to unlock next Level!",
-
-  "topLearners": "🏆 Top Learners"
+  "speechMasterDesc": "Speak vocabulary words and earn points!"
 }

@@ -1,31 +1,27 @@
 {
-  "brandName": "लर्निवर्स",
-  "welcome": "स्वागत है",
-  "tagline": "मज़ा, जिज्ञासा और देखभाल के साथ युवा दिमाग़ों को बढ़ाना",
-  "getStarted": "शुरू करें",
-  "pointsLabel": "अंक:",
-  "resetBtn": "पूर्ण रीसेट",
-
-  "memoryGame": "स्मृति खेल",
-  "memoryDesc": "रोमांचक चुनौतियों के साथ अपनी स्मृति बढ़ाएँ!",
-
-  "emotionRecog": "भावना पहचान",
-  "emotionDesc": "सहानुभूति कौशल को मजबूत करने के लिए भावनाओं की पहचान करें।",
-
-  "behaviorQuiz": "व्यवहार प्रश्नोत्तरी",
-  "behaviorDesc": "कक्षा में सर्वोत्तम व्यवहार सीखें और परखें!",
-
-  "socialQuiz": "सामाजिक प्रश्नोत्तरी",
-  "socialDesc": "समुदाय और पर्यावरण की देखभाल के बारे में जानें।",
-
-  "mathAdventure": "गणित यात्रा",
-  "mathDesc": "जोड़, घटाव, गुणा और भाग में महारत हासिल करें!",
-
-  "speechMaster": "स्पीच मास्टर",
-  "speechDesc": "शब्द बोलें और अंक अर्जित करें!",
-
-  "levelProgress": "🎮 स्तर प्रगति मानचित्र",
-  "levelStatus": "अगला स्तर खोलने के लिए 100 अंक अर्जित करें!",
-
-  "topLearners": "🏆 शीर्ष शिक्षार्थी"
+  "brandName": "Learniverse",
+  "pointsLabel": "Points:",
+  "resetBtn": "Full Reset",
+  "homeLink": "Home",
+  "featuresBtn": "Features ▼",
+  "moodTracker": "Mood Tracker",
+  "leaderboard": "Points & Leaderboard",
+  "profile": "Profile Section",
+  "loginBtn": "Login",
+  "logoutBtn": "Logout",
+  "welcome": "Learniverse!",
+  "tagline": "Growing Young Minds Through Fun, Curiosity, and Care",
+  "getStarted": "Get Started",
+  "memoryGame": "Memory Game",
+  "memoryGameDesc": "Boost your memory with exciting challenges!",
+  "emote": "Emotion Recognition",
+  "emoteDesc": "Identify emotions to strengthen empathy skills.",
+  "behaviorQuiz": "Behavior Quiz",
+  "behaviorQuizDesc": "Test and learn the best classroom behaviors!",
+  "socialQuiz": "Social Quiz",
+  "socialQuizDesc": "Learn about caring for the community and environment.",
+  "mathAdventure": "Math Adventure",
+  "mathAdventureDesc": "Master addition, subtraction, multiplication, and division!",
+  "speechMaster": "Speech Master",
+  "speechMasterDesc": "Speak vocabulary words and earn points!"
 }

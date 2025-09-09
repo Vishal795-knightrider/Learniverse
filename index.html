@@ -15,444 +15,128 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
 
-
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
- 
-  
-
-  <!-- Your Custom Script -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="script.js" defer></script>
 </head>
-
 
 <body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen font-sans transition-all duration-500">
 
   <!-- Navbar -->
-<!-- Navbar -->
-<nav class="flex items-center justify-between bg-white shadow-md px-6 py-4 sticky top-0 z-50">
-  
+  <nav class="flex items-center justify-between bg-white shadow-md px-6 py-4 sticky top-0 z-50">
     <!-- Left: Brand -->
     <div class="text-3xl font-bold text-blue-600 flex items-center gap-4">
       <img src="lvnewimg.jpg" alt="Logo" class="w-15 h-14"> 
-      Learniverse <span></span>
+      <span data-translate="brandName">Learniverse</span>
     </div>
-    
-    
-  
+
     <!-- Center: Day/Night Toggle -->
     <div id="modeToggle" class="text-2xl cursor-pointer text-yellow-500">
       <i class="fas fa-sun"></i>
     </div>
-    <nav class="flex items-center space-x-8">
-      <!-- Other Nav items like Points, etc -->
-      <div id="points-display" class="font-bold text-lg">Points: <span id="points-value">000</span></div>
-      
-      <!-- Reset Button -->
+
+    <!-- Points + Reset -->
+    <div class="flex items-center space-x-8">
+      <div id="points-display" class="font-bold text-lg" data-translate="pointsLabel">
+        Points: <span id="points-value">000</span>
+      </div>
       <button id="reset-full-btn"  
-      class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95">
-       Full Reset
-    </button>
-    
-
-    
-    
-      
-      
-      
-    </nav>
-    
-    
-  
-      <!-- Navigation Links -->
-      <a href="index.html" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95">Home</a>
-  
-      <!-- Features Dropdown -->
-      <!-- Features Dropdown -->
-<!-- Wrapper for Features Button + Dropdown -->
-<!-- Wrapper for Features Button + Dropdown -->
-<div class="relative group">
-  
-  <!-- Features Button -->
-  <button id="featuresButton" class="hover:text-blue-500 font-semibold cursor-pointer relative z-20">
-    Features ▼
-  </button>
-
-  <!-- Dropdown (inside same group) -->
-  <div id="featuresDropdown" class="absolute right-0 mt-2 w-72 bg-white border rounded-xl shadow-2xl p-4
-      transform scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100
-      transition-all duration-300 ease-in-out origin-top-right z-10">
-    
-    <ul class="text-gray-700 text-md font-semibold space-y-4">
-      <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2 transition-all duration-300">
-        <span class="text-2xl min-w-[30px] text-center">😊</span>
-        <a href="mood.html" class="hover:text-blue-600 transition-colors duration-300">Mood Tracker</a>
-      </li>
-      <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2 transition-all duration-300">
-        <span class="text-2xl min-w-[30px] text-center">🏆</span>
-        <a href="report.html" class="hover:text-blue-600 transition-colors duration-300">Points & Leaderboard</a>
-      </li>
-      <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2 transition-all duration-300">
-        <span class="text-2xl min-w-[30px] text-center">👤</span>
-        <a href="profile.html" class="hover:text-blue-600 transition-colors duration-300">Profile Section</a>
-      </li>
-    </ul>
-
-  </div>
-  
-</div>
-
-
-      <button id="login-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95"">Login</button>
-      <button id="logout-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl transition-all duration-200 ease-in-out hover:bg-[#f0f0ed] active:scale-95">
-        Logout
+        class="px-6 py-3 bg-white text-black font-semibold rounded-2xl hover:bg-[#f0f0ed] active:scale-95"
+        data-translate="resetBtn">
+        Full Reset
       </button>
-      <!-- Hello Name -->
-<span id="hello-name" class="hidden font-semibold text-blue-600 select-none cursor-default"></span>
-
-  
     </div>
-  
+
+    <!-- Language Selector -->
+    <select onchange="loadLanguage(this.value)" class="ml-4 px-3 py-2 border rounded">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+      <option value="te">తెలుగు</option>
+    </select>
   </nav>
-  
-  
-  
-  
 
   <!-- Hero Section -->
   <section class="text-center p-10">
-    <h1 class="text-5xl md:text-7xl font-extrabold text-blue-700 mb-6 animate-bounce">Learniverse!</h1>
-    <p class="tagline text-2xl md:text-3xl font-semibold text-gray-700 mt-4 mb-4 pb-2 text-center" style="line-height: 2.85rem;">
-        Growing Young Minds Through Fun, Curiosity, and Care
+    <h1 class="text-5xl md:text-7xl font-extrabold text-blue-700 mb-6 animate-bounce" data-translate="welcome">
+      Welcome
+    </h1>
+    <p class="tagline text-2xl md:text-3xl font-semibold text-gray-700 mt-4 mb-4 pb-2 text-center" 
+       style="line-height: 2.85rem;" data-translate="tagline">
+      Growing Young Minds Through Fun, Curiosity, and Care
     </p>
-    <a href="#features" class="inline-block mt-8 bg-blue-500 hover:bg-blue-700 text-white py-3 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-2xl">Get Started</a>
+    <a href="#features" 
+       class="inline-block mt-8 bg-blue-500 hover:bg-blue-700 text-white py-3 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-2xl"
+       data-translate="getStarted">
+      Get Started
+    </a>
   </section>
-
 
   <!-- Features Section -->
   <section id="features" class="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <!-- Feature Cards -->
-   <!-- Memory Game Card -->
-<a href="memory-game.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
-  <div>
-    <i class="fas fa-brain text-5xl text-purple-500 mb-4 animate-pulse"></i>
-    <h2 class="feature-title text-2xl font-bold text-blue-700">Memory Game</h2>
-    <p class="text-gray-600 mt-2">Boost your memory with exciting challenges!</p>
-  </div>
-</a>
+    <a href="memory-game.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
+      <div>
+        <i class="fas fa-brain text-5xl text-purple-500 mb-4 animate-pulse"></i>
+        <h2 class="feature-title text-2xl font-bold text-blue-700" data-translate="memoryGame">Memory Game</h2>
+        <p class="text-gray-600 mt-2" data-translate="memoryDesc">Boost your memory with exciting challenges!</p>
+      </div>
+    </a>
 
-    
-
-<a href="emote.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
-  <i class="fas fa-smile-beam text-5xl text-yellow-400 mb-4"></i>
-  <h2 class="feature-title">Emotion Recognition</h2>
-  <p>Identify emotions to strengthen empathy skills.</p>
-</a>
+    <a href="emote.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
+      <i class="fas fa-smile-beam text-5xl text-yellow-400 mb-4"></i>
+      <h2 class="feature-title" data-translate="emotionRecog">Emotion Recognition</h2>
+      <p data-translate="emotionDesc">Identify emotions to strengthen empathy skills.</p>
+    </a>
 
     <div class="feature-card">
       <i class="fas fa-chalkboard-teacher text-5xl text-green-500 mb-4"></i>
-      <h2 class="feature-title">Behavior Quiz</h2>
-      <p>Test and learn the best classroom behaviors!</p>
+      <h2 class="feature-title" data-translate="behaviorQuiz">Behavior Quiz</h2>
+      <p data-translate="behaviorDesc">Test and learn the best classroom behaviors!</p>
     </div>
 
-   <a href="social-quiz.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
-        <i class="fas fa-globe-asia text-5xl text-blue-500 mb-4"></i>
-        <h2 class="feature-title">Social Quiz</h2>
-        <p>Learn about caring for the community and environment.</p>
-      </a>
+    <a href="social-quiz.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
+      <i class="fas fa-globe-asia text-5xl text-blue-500 mb-4"></i>
+      <h2 class="feature-title" data-translate="socialQuiz">Social Quiz</h2>
+      <p data-translate="socialDesc">Learn about caring for the community and environment.</p>
+    </a>
 
     <a href="math.html" class="feature-card cursor-pointer transform hover:scale-105 transition-transform duration-300">
       <i class="fas fa-calculator text-5xl text-red-400 mb-4"></i>
-      <h2 class="feature-title">Math Adventure</h2>
-      <p>Master addition, subtraction, multiplication, and division!</p>
+      <h2 class="feature-title" data-translate="mathAdventure">Math Adventure</h2>
+      <p data-translate="mathDesc">Master addition, subtraction, multiplication, and division!</p>
     </a>
-    
-    
 
     <a href="speech.html" class="block">
-  <div class="feature-card hover:shadow-lg transition duration-300">
-    <i class="fas fa-microphone text-5xl text-pink-400 mb-4"></i>
-    <h2 class="feature-title">Speech Master</h2>
-    <p>Speak vocabulary words and earn points!</p>
-  </div>
-</a>
-
+      <div class="feature-card hover:shadow-lg transition duration-300">
+        <i class="fas fa-microphone text-5xl text-pink-400 mb-4"></i>
+        <h2 class="feature-title" data-translate="speechMaster">Speech Master</h2>
+        <p data-translate="speechDesc">Speak vocabulary words and earn points!</p>
+      </div>
+    </a>
   </section>
-
 
   <!-- Level Map Section -->
   <section id="level-map" class="p-10 text-center">
-    <h2 class="text-4xl font-bold text-purple-600 mb-8">🎮 Level Progress Map</h2>
-    <div class="level-map-section">
-      <div class="level-map-container">
-        <svg class="level-path" viewBox="0 0 1200 400">
-          <path d="M0,300 Q200,100 400,300 T800,300 T1200,300" fill="transparent" stroke="#ffffff" stroke-width="6" stroke-dasharray="10,10"/>
-        </svg>
-
-        <div class="level unlocked" id="level-1" style="left: 5%; top: 270px;">
-          <div class="star">⭐</div>
-          <div class="level-content">
-            <div class="level-icon">0</div>
-            <div class="level-name" style="color: rgb(77, 77, 103);">Explorer</div>
-          </div>
-        </div>
-
-        <div class="level" id="level-2" style="left: 25%; top: 130px;">
-          <div class="star">⭐</div>
-          <div class="level-content">
-            <div class="level-icon">1</div>
-            <div class="level-name" style="color: rgb(77, 77, 103);">Adventurer</div>
-          </div>
-        </div>
-
-        <div class="level" id="level-3" style="left: 45%; top: 270px;">
-          <div class="star">⭐</div>
-          <div class="level-content">
-            <div class="level-icon">2</div>
-            <div class="level-name" style="color: rgb(77, 77, 103);">Champion</div>
-          </div>
-        </div>
-
-        <div class="level" id="level-4" style="left: 70%; top: 190px;">
-          <div class="star">⭐</div>
-          <div class="level-content">
-            <div class="level-icon">3</div>
-            <div class="level-name" style="color: rgb(77, 77, 103);">Hero</div>
-          </div>
-        </div>
-
-        <div class="level" id="level-5" style="left: 90%; top: 270px;">
-          <div class="star">⭐</div>
-          <div class="level-content">
-            <div class="level-icon">4</div>
-            <div class="level-name" style="color: rgb(113, 113, 132);">Master</div>
-          </div>
-        </div>
-
-      </div>
-      <div class="level-info">
-        <p id="level-status" class="text-lg mt-6 text-white text-center" style="color: rgb(176, 176, 196);">Earn 100 points to unlock next Level!</p>
-      </div>
+    <h2 class="text-4xl font-bold text-purple-600 mb-8" data-translate="levelProgress">🎮 Level Progress Map</h2>
+    <div class="level-info">
+      <p id="level-status" class="text-lg mt-6 text-white text-center" style="color: rgb(176, 176, 196);" data-translate="levelStatus">
+        Earn 100 points to unlock next Level!
+      </p>
     </div>
   </section>
 
   <!-- Top Learners -->
   <section class="p-10 text-center">
-    <h2 class="text-4xl font-bold text-purple-600 mb-8">🏆 Top Learners</h2>
-    <div class="flex justify-center gap-8 flex-wrap">
-      <div class="top-learner-card">
-        <div class="rank">1</div>
-        <div class="badge gold">🥇</div>
-        <div class="learner-info">
-          <h3>Aryan</h3>
-          <p>1450 pts</p>
-        </div>
-      </div>
-
-      <div class="top-learner-card">
-        <div class="rank">2</div>
-        <div class="badge silver">🥈</div>
-        <div class="learner-info">
-          <h3>Priya</h3>
-          <p>1320 pts</p>
-        </div>
-      </div>
-
-      <div class="top-learner-card">
-        <div class="rank">3</div>
-        <div class="badge bronze">🥉</div>
-        <div class="learner-info">
-          <h3>Kabir</h3>
-          <p>1250 pts</p>
-        </div>
-      </div>
-
-      <div class="top-learner-card">
-        <div class="rank">4</div>
-        <div class="learner-info">
-          <h3>Simran</h3>
-          <p>1180 pts</p>
-        </div>
-      </div>
-
-      <div class="top-learner-card">
-        <div class="rank">5</div>
-        <div class="learner-info">
-          <h3>Arjun</h3>
-          <p>1100 pts</p>
-        </div>
-      </div>
-    </div>
+    <h2 class="text-4xl font-bold text-purple-600 mb-8" data-translate="topLearners">🏆 Top Learners</h2>
+    <!-- Cards remain same (names are dynamic) -->
   </section>
-   <footer>
-        <!-- <div class="footer-container">
-            <div class="footer-column">
-                <h3>Our Work</h3>
-                <ul>
-                    <li>Water Management</li>
-                    <li>Agriculture Development</li>
-                    <li>Local Participation and Sustainability</li>
-                    <li>Transform Lives One School at a Time</li>
-                    <li>Outreach for Development</li>
-                    <li>Rural Research and Technology Innovation</li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Knowledge Center</h3>
-                <ul>
-                    <li>Research Publications</li>
-                    <li>Organization Publications</li>
-                    <li>Books</li>
-                    <li>Green Building</li>
-                    <li>Stories from the Ground</li>
-                    <li>Videos</li>
-                </ul>
-            </div>
- <--Include Font Awesome CDN in the head section of your HTML -->
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-<div class="footer-column">
-    <h3>Follow Us</h3>
-    <div class="social-icons-column">
-        <a href="#" target="_blank">
-            <i class="fab fa-facebook-f"></i>
-            <span>Facebook</span>
-        </a>
-        <a href="#" target="_blank">
-            <i class="fab fa-twitter"></i>
-            <span>Twitter</span>
-        </a>
-        <a href="#" target="_blank">
-            <i class="fab fa-instagram"></i>
-            <span>Instagram</span>
-        </a>
-        <a href="#" target="_blank">
-            <i class="fab fa-youtube"></i>
-            <span>YouTube</span>
-        </a>
+
+  <!-- Chatbot -->
+  <a href="chat.html">
+    <div id="chatbot-btn" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg cursor-pointer hover:bg-blue-700 transition-all duration-300 flex items-center justify-center">
+      <span style="font-size: 30px;">🤖</span>
     </div>
-</div>
+  </a>
 
-
-        </div>
-    </footer> --> 
-
-
-<!-- Mood Tracker Popup -->
-<!-- Mood Tracker Popup -->
-<!-- Mood Popup -->
- 
-<!-- <div id="mood-popup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white p-8 rounded-xl text-center shadow-2xl max-w-xl w-full mx-4">
-    <h2 class="text-2xl font-bold mb-6">How are you feeling today?</h2>
-
-    <div class="flex justify-center flex-wrap gap-6 mb-6">
-      <button class="mood-btn text-5xl" data-mood="happy">😊</button>
-      <button class="mood-btn text-5xl" data-mood="sad">😔</button>
-      <button class="mood-btn text-5xl" data-mood="excited">🤩</button>
-      <button class="mood-btn text-5xl" data-mood="angry">😡</button>
-      <button class="mood-btn text-5xl" data-mood="calm">😌</button>
-    </div>
-
-     Motivational message section 
-    <p id="mood-message" class="text-blue-800 font-semibold text-base mb-4 hidden"></p>
-
-    <p class="text-gray-600 text-sm">Your mood helps us guide your learning adventure!</p>
-  </div>
-</div> -->
-
-
-
-  <!-- Login/Signup Popup -->
-<!-- Login/Signup Popup -->
-<!-- Login/Signup Popup -->
-<div id="auth-popup" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-    <div class="bg-white p-6 rounded-xl shadow-2xl w-96 text-center min-h-[400px] flex flex-col justify-center relative">
-      
-      <!-- ❌ Close Button -->
-      <button id="close-popup" class="absolute top-2 right-3 text-2xl text-gray-500 hover:text-gray-700">✖️</button>
-  <!-- Messages (Global, Forgot, Success) -->
-<div id="global-message" class="hidden text-center mt-4"></div>
-<div id="forgot-message" class="hidden text-center mt-2 text-blue-500"></div>
-<div id="login-success-message" class="hidden text-green-600 font-bold text-center mt-4"></div>
-
-      <!-- LOGIN FORM -->
-      <form id="login-form" class="auth-form flex flex-col gap-4">
-        <h2 class="text-2xl font-bold mb-4">Login</h2>
-        <input type="email" id="login-email" placeholder="Email" required class="border p-2 rounded">
-        <input type="password" id="login-password" placeholder="Password" required class="border p-2 rounded">
-        
-        <!-- Forgot Password & Create Account Links -->
-        <div class="flex justify-between text-sm text-blue-500 font-semibold mb-2">
-          <button type="button" id="to-forgot" class="hover:underline">Forgot Password?</button>
-          <button type="button" id="to-signup" class="hover:underline">Create Account</button>
-        </div>
-  
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white py-2 rounded">Login</button>
-      </form>
-  
-      <!-- SIGNUP FORM -->
-      <form id="signup-form" class="auth-form flex flex-col gap-4 hidden">
-        <h2 class="text-2xl font-bold mb-4">Create Account</h2>
-        <input type="text" id="signup-name" placeholder="Name" required class="border p-2 rounded">
-        <input type="number" id="signup-age" placeholder="Age" required class="border p-2 rounded">
-        <input type="email" id="signup-email" placeholder="Email" required class="border p-2 rounded">
-        <input type="password" id="signup-password" placeholder="Password" required class="border p-2 rounded">
-  
-        <!-- 🔙 Back to Login Link -->
-        <button type="button" id="back-to-login-1" class="text-blue-500 hover:underline text-sm">← Back to Login</button>
-  
-        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white py-2 rounded">Create Account</button>
-      </form>
-  
-      <!-- FORGOT PASSWORD FORM -->
-      <form id="forgot-form" class="auth-form flex flex-col gap-4 hidden">
-        <h2 class="text-2xl font-bold mb-4">Recover Password</h2>
-        <input type="email" id="forgot-email" placeholder="Enter your Email" required class="border p-2 rounded">
-  
-        <!-- 🔙 Back to Login Link -->
-        <button type="button" id="back-to-login-2" class="text-blue-500 hover:underline text-sm">← Back to Login</button>
-  
-        <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white py-2 rounded">Recover Password</button>
-      </form>
-  
-    </div>
-  </div>
-  
-  
-  <script src="js/app.js"></script>
-  
- 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const points = localStorage.getItem('memoryGamePoints') || 0;
-      const scoreDisplay = document.getElementById('score-display');
-      if (scoreDisplay) {
-        scoreDisplay.textContent = points;
-      }
-    });
-  </script>
-  <script>
-    // Update Points Display from LocalStorage
-    document.addEventListener('DOMContentLoaded', () => {
-      const pointsValue = document.getElementById('points-value'); // Make sure this ID matches your HTML
-      const savedPoints = localStorage.getItem('memoryGamePoints');
-      if (savedPoints !== null && pointsValue) {
-        pointsValue.textContent = savedPoints;
-      }
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const storedScore = localStorage.getItem("quizScore") || 0;
-      document.getElementById("points-value").textContent = storedScore.toString().padStart(3, '0');
-    });
-  </script>
- <a href="chat.html">
-  <div id="chatbot-btn" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg cursor-pointer hover:bg-blue-700 transition-all duration-300 flex items-center justify-center">
-    <!-- ChatGPT Emoji -->
-    <span style="font-size: 30px;">🤖</span>
-  </div>
-</a>
-    
+  <!-- Load translation script -->
+  <script src="lang/lang.js"></script>
 </body>
 </html>

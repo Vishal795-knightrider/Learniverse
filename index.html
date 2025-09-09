@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +16,6 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
-
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="script.js" defer></script>
 </head>
@@ -35,16 +36,15 @@
     </div>
 
     <nav class="flex items-center space-x-8">
-      <!-- Other Nav items like Points, etc -->
-      <div id="points-display" class="font-bold text-lg" data-translate="pointsLabel">
-        Points: <span id="points-value">000</span>
+      <!-- Points -->
+      <div id="points-display" class="font-bold text-lg">
+        <span data-translate="pointsLabel">Points:</span> <span id="points-value">000</span>
       </div>
-      
       <!-- Reset Button -->
       <button id="reset-full-btn"  
-      class="px-6 py-3 bg-white text-black font-semibold rounded-2xl hover:bg-[#f0f0ed] active:scale-95"
-      data-translate="resetBtn">
-       Full Reset
+        class="px-6 py-3 bg-white text-black font-semibold rounded-2xl hover:bg-[#f0f0ed] active:scale-95"
+        data-translate="resetBtn">
+        Full Reset
       </button>
     </nav>
 
@@ -60,24 +60,17 @@
           transform scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100
           transition-all duration-300 ease-in-out origin-top-right z-10">
         <ul class="text-gray-700 text-md font-semibold space-y-4">
-          <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2">
-            <span class="text-2xl">😊</span>
-            <a href="mood.html" class="hover:text-blue-600" data-translate="moodTracker">Mood Tracker</a>
-          </li>
-          <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2">
-            <span class="text-2xl">🏆</span>
-            <a href="report.html" class="hover:text-blue-600" data-translate="leaderboard">Points & Leaderboard</a>
-          </li>
-          <li class="flex items-center space-x-4 hover:bg-blue-50 rounded-md p-2">
-            <span class="text-2xl">👤</span>
-            <a href="profile.html" class="hover:text-blue-600" data-translate="profile">Profile Section</a>
-          </li>
+          <li><a href="mood.html" class="hover:text-blue-600" data-translate="moodTracker">Mood Tracker</a></li>
+          <li><a href="report.html" class="hover:text-blue-600" data-translate="leaderboard">Points & Leaderboard</a></li>
+          <li><a href="profile.html" class="hover:text-blue-600" data-translate="profile">Profile Section</a></li>
         </ul>
       </div>
     </div>
 
-    <button id="login-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl hover:bg-[#f0f0ed] active:scale-95" data-translate="loginBtn">Login</button>
-    <button id="logout-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl hover:bg-[#f0f0ed] active:scale-95" data-translate="logoutBtn">Logout</button>
+    <!-- Auth Buttons -->
+    <button id="login-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl hover:bg-[#f0f0ed]" data-translate="loginBtn">Login</button>
+    <button id="logout-btn" class="px-6 py-3 bg-white text-black font-semibold rounded-2xl hover:bg-[#f0f0ed]" data-translate="logoutBtn">Logout</button>
+    <span id="hello-name" class="hidden font-semibold text-blue-600"></span>
 
     <!-- Language Selector -->
     <select onchange="loadLanguage(this.value)" class="ml-4 px-3 py-2 border rounded">
@@ -98,22 +91,55 @@
     <a href="#features" class="inline-block mt-8 bg-blue-500 hover:bg-blue-700 text-white py-3 px-6 rounded-full shadow-lg" data-translate="getStarted">Get Started</a>
   </section>
 
-  <!-- (Rest of your code remains same: Features, Level Map, Top Learners, Footer, Popups etc.) -->
+  <!-- Features Section (Game Cards) -->
+  <section id="features" class="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <a href="memory-game.html" class="feature-card">
+      <h2 class="feature-title" data-translate="memoryGame">Memory Game</h2>
+      <p data-translate="memoryGameDesc">Boost your memory with exciting challenges!</p>
+    </a>
+    <a href="emote.html" class="feature-card">
+      <h2 class="feature-title" data-translate="emote">Emotion Recognition</h2>
+      <p data-translate="emoteDesc">Identify emotions to strengthen empathy skills.</p>
+    </a>
+    <div class="feature-card">
+      <h2 class="feature-title" data-translate="behaviorQuiz">Behavior Quiz</h2>
+      <p data-translate="behaviorQuizDesc">Test and learn the best classroom behaviors!</p>
+    </div>
+    <a href="social-quiz.html" class="feature-card">
+      <h2 class="feature-title" data-translate="socialQuiz">Social Quiz</h2>
+      <p data-translate="socialQuizDesc">Learn about caring for the community and environment.</p>
+    </a>
+    <a href="math.html" class="feature-card">
+      <h2 class="feature-title" data-translate="mathAdventure">Math Adventure</h2>
+      <p data-translate="mathAdventureDesc">Master addition, subtraction, multiplication, and division!</p>
+    </a>
+    <a href="speech.html" class="feature-card">
+      <h2 class="feature-title" data-translate="speechMaster">Speech Master</h2>
+      <p data-translate="speechMasterDesc">Speak vocabulary words and earn points!</p>
+    </a>
+  </section>
+
+  <!-- Level Progress Map -->
+  <section id="level-map" class="p-10 text-center">
+    <h2 class="text-4xl font-bold text-purple-600 mb-8" data-translate="levelMap">🎮 Level Progress Map</h2>
+    <!-- ... your SVG and levels remain same ... -->
+  </section>
+
+  <!-- Top Learners -->
+  <section class="p-10 text-center">
+    <h2 class="text-4xl font-bold text-purple-600 mb-8" data-translate="topLearners">🏆 Top Learners</h2>
+    <!-- ... your learners remain same ... -->
+  </section>
+
+  <!-- Footer + Popups (unchanged) -->
 
   <!-- Chatbot -->
   <a href="chat.html">
-    <div id="chatbot-btn" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg cursor-pointer hover:bg-blue-700 transition-all duration-300 flex items-center justify-center">
-      <span style="font-size: 30px;">🤖</span>
-    </div>
+    <div id="chatbot-btn" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg">🤖</div>
   </a>
 
-  <!-- Your existing scripts -->
+  <!-- Scripts -->
   <script src="js/app.js"></script>
-  <script>
-    // Points related script (same as before)
-  </script>
-
-  <!-- Language script -->
   <script src="lang/lang.js"></script>
 </body>
 </html>
